@@ -24,6 +24,7 @@ namespace AlfaRec.UnitTests
             Product product = new Product(name, price);
 
             await controller.PostProduct(product);
+
             Assert.Equal(context.Products.Where(x => x.Name == product.Name).FirstOrDefault().Name,product.Name);
             Assert.Equal(context.Products.Where(x => x.Price == product.Price).FirstOrDefault().Price, product.Price);
         }
