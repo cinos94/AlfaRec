@@ -8,6 +8,10 @@ namespace AlfaRec.Models
         {
 
         }
-        public DbSet<Product> Products { get; set; }
+        public ProductContext()
+        {
+
+        }
+        public virtual DbSet<Product> Products { get; set; }
     }
 }
