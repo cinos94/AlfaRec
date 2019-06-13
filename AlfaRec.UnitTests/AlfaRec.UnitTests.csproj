@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AlfaRec\AlfaRec.csproj" />
+    <ProjectReference Include="..\AlfaRec\AlfaRec.API.csproj" />
   </ItemGroup>
 
 </Project>
