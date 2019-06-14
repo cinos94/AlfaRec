@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AlfaRec.Models;
 using AlfaRec.MVC.Connections;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -17,15 +18,10 @@ namespace AlfaRec.MVC.Controllers
             httpClient = client;
         }
         // GET: Products
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            return View();
-        }
-
-        // GET: Products/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
+            var products = await httpClient.GetProducts();
+            return View(products);
         }
 
         // GET: Products/Create
@@ -37,63 +33,57 @@ namespace AlfaRec.MVC.Controllers
         // POST: Products/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<ActionResult> Create(Product product)
         {
             try
             {
-                // TODO: Add insert logic here
-
+                await httpClient.PostProduct(product);
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch (Exception ex)
             {
                 return View();
             }
         }
 
         // GET: Products/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<ActionResult> Edit(int id)
         {
-            return View();
+            var product = await httpClient.GetProduct(id);
+            return View(product);
         }
 
         // POST: Products/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<ActionResult> Edit(Product product)
         {
             try
             {
-                // TODO: Add update logic here
+                await httpClient.PutProduct(product);
 
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch (Exception ex)
             {
                 return View();
             }
-        }
-
-        // GET: Products/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
         }
 
         // POST: Products/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        [HttpGet]
+        public async Task<ActionResult> Delete(int id)
         {
             try
             {
-                // TODO: Add delete logic here
+                await httpClient.DeleteProduct(id);
 
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                ViewBag["Message"] = ex.Message;
+                return View("Index");
             }
         }
     }

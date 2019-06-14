@@ -89,10 +89,16 @@ namespace AlfaRec.Controllers
             {
                 return BadRequest(ModelState);
             }
-
-            _context.Products.Add(product);
-            await _context.SaveChangesAsync();
-
+            try
+            {
+                product.ProductId = 0;
+                _context.Products.Add(product);
+                await _context.SaveChangesAsync();
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
             return CreatedAtAction("GetProduct", new { id = product.ProductId }, product);
         }
 

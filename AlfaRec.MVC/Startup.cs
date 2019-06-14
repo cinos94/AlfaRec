@@ -49,7 +49,7 @@ namespace AlfaRec.MVC
 
             app.UseStaticFiles();
             app.UseCookiePolicy();
-
+            app.UseRequestLocalization("en-US");
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
