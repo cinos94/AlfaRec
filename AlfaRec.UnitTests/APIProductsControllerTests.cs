@@ -10,7 +10,7 @@ using Xunit;
 
 namespace AlfaRec.UnitTests
 {
-    public class ProductControllerTests
+    public class APIProductControllerTests
     {
         [Theory]
         [InlineData("chleb",2.50)]
