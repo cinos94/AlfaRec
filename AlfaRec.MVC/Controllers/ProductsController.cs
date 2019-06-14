@@ -20,8 +20,16 @@ namespace AlfaRec.MVC.Controllers
         // GET: Products
         public async Task<ActionResult> Index()
         {
-            var products = await httpClient.GetProducts();
-            return View(products);
+            try
+            {
+                var products = await httpClient.GetProducts();
+                return View(products);
+            }
+            catch(Exception ex)
+            {
+                ViewBag["Message"] = ex.Message;
+                return View();
+            }
         }
 
         // GET: Products/Create
@@ -49,8 +57,15 @@ namespace AlfaRec.MVC.Controllers
         // GET: Products/Edit/5
         public async Task<ActionResult> Edit(int id)
         {
-            var product = await httpClient.GetProduct(id);
-            return View(product);
+            try
+            {
+                var product = await httpClient.GetProduct(id);
+                return View(product);
+            }
+            catch(Exception ex)
+            {
+                return View();
+            }
         }
 
         // POST: Products/Edit/5
@@ -61,7 +76,6 @@ namespace AlfaRec.MVC.Controllers
             try
             {
                 await httpClient.PutProduct(product);
-
                 return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)
@@ -77,7 +91,6 @@ namespace AlfaRec.MVC.Controllers
             try
             {
                 await httpClient.DeleteProduct(id);
-
                 return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)
